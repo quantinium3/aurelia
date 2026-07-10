@@ -45,6 +45,11 @@ variable "elasticache_subnets" {
   type        = list(string)
 }
 
+variable "subnet_group_name" {
+  description = "The name of the existing elasticache subnet group (created by the network module) to use"
+  type        = string
+}
+
 variable "node_security_group_id" {
   description = "The security group ID of the EKS cluster nodes, allowed to reach the cache"
   type        = string

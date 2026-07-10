@@ -23,6 +23,9 @@ module "redis" {
     }
   }
 
-  subnet_ids = var.elasticache_subnets
-  tags       = var.tags
+  create_subnet_group = false
+  subnet_group_name   = var.subnet_group_name
+  subnet_ids          = var.elasticache_subnets
+
+  tags = var.tags
 }
