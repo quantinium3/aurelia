@@ -1,0 +1,19 @@
+name: loadgenerator
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/loadgenerator/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: loadgenerator
+      context_path: src/loadgenerator
