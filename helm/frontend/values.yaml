@@ -1,0 +1,27 @@
+name: frontend
+
+image:
+  repository: frontend
+  tag: local
+
+port: 3009
+
+env:
+  - name: PORT
+    value: "3009"
+  - name: PRODUCT_CATALOG_SERVICE_ADDR
+    value: "product-catalog-service-service:3000"
+  - name: CURRENCY_SERVICE_ADDR
+    value: "currency-service-service:3001"
+  - name: CART_SERVICE_ADDR
+    value: "cart-service-service:3006"
+  - name: RECOMMENDATION_SERVICE_ADDR
+    value: "recommendation-service-service:3005"
+  - name: CHECKOUT_SERVICE_ADDR
+    value: "checkout-service-service:3008"
+  - name: SHIPPING_SERVICE_ADDR
+    value: "shipping-service-service:3002"
+  - name: AD_SERVICE_ADDR
+    value: "ad-service-service:3004"
+  - name: SHOPPING_ASSISTANT_SERVICE_ADDR
+    value: "shopping-assistant-service-service:3010"
