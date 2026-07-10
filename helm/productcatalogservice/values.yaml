@@ -1,26 +1,22 @@
 name: product-catalog-service
-
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice
-  tag: a79a25f45a75e78f85025f45b7e0dff8cd8a4347
-
+  tag: 243e0f93cf14460c62a437afd9c1744411a07738
 port: 3000
-
 # secretName is a stable, Terraform-chosen name (see module/database),
 # not an auto-generated ARN - safe to hardcode, never changes.
 postgres:
   region: ap-south-1
   secretName: aurelia/rds/password
-
 env:
-  - name: PORT
-    value: "3000"
-  - name: POSTGRES_ADDR
-    value: "productcatalog-db.internal.himanshu.dev:5432"
-  - name: POSTGRES_DATABASE_NAME
-    value: productcatalog
-  - name: POSTGRES_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: product-catalog-service-db-credentials
-        key: password
+- name: PORT
+  value: "3000"
+- name: POSTGRES_ADDR
+  value: "productcatalog-db.internal.himanshu.dev:5432"
+- name: POSTGRES_DATABASE_NAME
+  value: productcatalog
+- name: POSTGRES_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: product-catalog-service-db-credentials
+      key: password
