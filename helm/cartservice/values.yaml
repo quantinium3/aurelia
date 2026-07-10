@@ -1,0 +1,13 @@
+name: cart-service
+
+image:
+  repository: cartservice
+  tag: local
+
+port: 3006
+
+env:
+  - name: ASPNETCORE_HTTP_PORTS
+    value: "3006"
+  - name: REDIS_ADDR
+    value: "redis-service:6379"
