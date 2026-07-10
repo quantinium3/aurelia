@@ -5,3 +5,7 @@ variable "repository_names" {
 variable "tags" {
   type = map(string)
 }
+
+variable "github_repo" {
+  type = string
+}
