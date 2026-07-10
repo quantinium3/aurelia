@@ -1,0 +1,11 @@
+name: email-service
+
+image:
+  repository: emailservice
+  tag: local
+
+port: 3003
+
+env:
+  - name: PORT
+    value: "3003"
