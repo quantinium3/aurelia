@@ -1,8 +1,8 @@
 name: ad-service
 
 image:
-  repository: adservice
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/adservice
+  tag: 923934d8476e22062b4151d4a9d2287518da6c78
 
 port: 3004
 
