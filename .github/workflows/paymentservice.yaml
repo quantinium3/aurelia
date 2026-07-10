@@ -1,0 +1,19 @@
+name: paymentservice
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/paymentservice/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: paymentservice
+      context_path: src/paymentservice
