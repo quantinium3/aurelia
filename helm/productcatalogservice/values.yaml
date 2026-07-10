@@ -14,7 +14,7 @@ postgres:
 migration:
   image:
     repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice-migrations
-    tag: pending
+    tag: a655c89399e54f4aac4698e1ef09b9ca21943638
 env:
 - name: PORT
   value: "3000"
