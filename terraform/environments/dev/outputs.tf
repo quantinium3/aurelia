@@ -61,3 +61,7 @@ output "vpn_client_vpn_endpoint_id" {
 output "vpn_dns_name" {
   value = module.vpn.dns_name
 }
+
+output "frontend_certificate_arn" {
+  value = aws_acm_certificate.frontend.arn
+}

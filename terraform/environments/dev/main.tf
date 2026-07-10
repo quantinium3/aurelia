@@ -97,6 +97,9 @@ module "addons" {
   vpc_id = module.network.vpc_id
   region = "ap-south-1"
 
+  public_hosted_zone_id = data.aws_route53_zone.public.zone_id
+  public_domain_name    = "himanshusolo.dev"
+
   tags = var.tags
 }
 

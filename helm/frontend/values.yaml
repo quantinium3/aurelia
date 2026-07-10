@@ -8,7 +8,7 @@ port: 3009
 
 ingress:
   domain: aurelia.himanshusolo.dev
-  certificateArn: "pending"
+  certificateArn: "arn:aws:acm:ap-south-1:253260001114:certificate/8ce1b9b0-b921-4bc8-be10-2962efae5762"
 
 env:
   - name: PORT

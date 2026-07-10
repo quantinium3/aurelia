@@ -17,6 +17,15 @@ module "vpc" {
   intra_subnets       = [for az in var.availability_zones : module.subnets.network_cidr_blocks["intra-${az}"]]
   public_subnets      = [for az in var.availability_zones : module.subnets.network_cidr_blocks["public-${az}"]]
 
+  # Lets the AWS Load Balancer Controller auto-discover subnets for
+  # internet-facing vs internal ALBs/NLBs when Ingress omits explicit subnet IDs.
+  public_subnet_tags = {
+    "kubernetes.io/role/elb" = "1"
+  }
+  private_subnet_tags = {
+    "kubernetes.io/role/internal-elb" = "1"
+  }
+
   manage_default_security_group  = true
   default_security_group_ingress = []
   default_security_group_egress  = []

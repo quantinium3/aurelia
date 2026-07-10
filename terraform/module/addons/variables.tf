@@ -32,3 +32,13 @@ variable "region" {
   description = "The AWS region the cluster is deployed into"
   type        = string
 }
+
+variable "public_hosted_zone_id" {
+  description = "The ID of the public Route53 hosted zone external-dns is allowed to manage records in"
+  type        = string
+}
+
+variable "public_domain_name" {
+  description = "The public domain name external-dns should limit itself to, e.g. himanshusolo.dev"
+  type        = string
+}
