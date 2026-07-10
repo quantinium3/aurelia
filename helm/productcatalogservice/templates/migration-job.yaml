@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.name }}-migrate
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}-migrate
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: "{{ .Values.migration.image.repository }}:{{ .Values.migration.image.tag }}"
+          env:
+            - name: POSTGRES_ADDR
+              value: {{ .Values.postgres.addr | quote }}
+            - name: POSTGRES_DATABASE_NAME
+              value: {{ .Values.postgres.databaseName | quote }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.name }}-db-credentials
+                  key: password
+          args:
+            - "-path=/migrations"
+            - "-database=postgres://postgres:$(POSTGRES_PASSWORD)@$(POSTGRES_ADDR)/$(POSTGRES_DATABASE_NAME)?sslmode=require"
+            - "up"
