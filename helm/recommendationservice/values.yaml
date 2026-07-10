@@ -1,0 +1,13 @@
+name: recommendation-service
+
+image:
+  repository: recommendationservice
+  tag: local
+
+port: 3005
+
+env:
+  - name: PORT
+    value: "3005"
+  - name: PRODUCT_CATALOG_SERVICE_ADDR
+    value: "product-catalog-service-service:3000"
