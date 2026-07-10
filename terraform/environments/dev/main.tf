@@ -24,7 +24,7 @@ module "cluster" {
   node_max_size       = var.node_max_size
   node_desired_size   = var.node_desired_size
 
-  additional_endpoint_access_cidrs = [var.vpn_client_cidr_block]
+  additional_endpoint_access_cidrs = [var.base_cidr_block]
 
   tags = var.tags
 }
@@ -42,9 +42,9 @@ module "database" {
 
   node_security_group_id = module.cluster.node_security_group_id
 
-  multi_az             = var.multi_az
-  deletion_protection  = var.deletion_protection
-  skip_final_snapshot  = var.skip_final_snapshot
+  multi_az            = var.multi_az
+  deletion_protection = var.deletion_protection
+  skip_final_snapshot = var.skip_final_snapshot
 
   password_rotation_days = var.password_rotation_days
 
@@ -63,6 +63,7 @@ module "elasticache" {
 
   vpc_id              = module.network.vpc_id
   elasticache_subnets = module.network.elasticache_subnets
+  subnet_group_name   = module.network.elasticache_subnet_group_name
 
   node_security_group_id = module.cluster.node_security_group_id
 
@@ -77,6 +78,9 @@ module "addons" {
   cluster_certificate_authority_data = module.cluster.cluster_certificate_authority_data
 
   secrets_manager_arns = [module.database.db_instance_master_user_secret_arn]
+
+  vpc_id = module.network.vpc_id
+  region = "ap-south-1"
 
   tags = var.tags
 }

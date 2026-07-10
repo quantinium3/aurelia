@@ -17,3 +17,7 @@ output "database_subnets" {
 output "elasticache_subnets" {
   value = module.vpc.elasticache_subnets
 }
+
+output "elasticache_subnet_group_name" {
+  value = module.vpc.elasticache_subnet_group_name
+}
