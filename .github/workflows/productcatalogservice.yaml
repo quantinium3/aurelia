@@ -1,0 +1,19 @@
+name: productcatalogservice
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/productcatalogservice/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: productcatalogservice
+      context_path: src/productcatalogservice
