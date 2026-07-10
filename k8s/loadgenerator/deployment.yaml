@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgenerator-deployment
+  labels:
+    app: loadgenerator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadgenerator
+  template:
+    metadata:
+      labels:
+        app: loadgenerator
+    spec:
+      containers:
+      - name: loadgenerator
+        image: loadgenerator:local
+        env:
+          - name: FRONTEND_ADDR
+            value: "frontend-service:3009"
+          - name: USERS
+            value: "10"
+          - name: RATE
+            value: "1"

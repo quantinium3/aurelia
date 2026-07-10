@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-service-deployment
+  labels:
+    app: recommendation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation-service
+  template:
+    metadata:
+      labels:
+        app: recommendation-service
+    spec:
+      containers:
+      - name: recommendation-service
+        image: recommendationservice:local
+        env:
+          - name: PORT
+            value: "3005"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "product-catalog-service-service:3000"
+        ports:
+          - containerPort: 3005
+

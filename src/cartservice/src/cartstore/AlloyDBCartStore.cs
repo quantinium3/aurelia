@@ -17,9 +17,7 @@ using Grpc.Core;
 using Npgsql;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using Google.Api.Gax.ResourceNames;
-using Google.Cloud.SecretManager.V1;
- 
+
 namespace cartservice.cartstore
 {
     public class AlloyDBCartStore : ICartStore
@@ -29,16 +27,8 @@ namespace cartservice.cartstore
 
         public AlloyDBCartStore(IConfiguration configuration)
         {
-            // Create a Cloud Secrets client.
-            SecretManagerServiceClient client = SecretManagerServiceClient.Create();
-            var projectId = configuration["PROJECT_ID"];
-            var secretId = configuration["ALLOYDB_SECRET_NAME"];
-            SecretVersionName secretVersionName = new SecretVersionName(projectId, secretId, "latest");
+            string alloyDBPassword = configuration["ALLOYDB_PASSWORD"];
 
-            AccessSecretVersionResponse result = client.AccessSecretVersion(secretVersionName);
-            // Convert the payload to a string. Payloads are bytes by default.
-            string alloyDBPassword = result.Payload.Data.ToStringUtf8().TrimEnd('\r', '\n');
-        
             // TODO: Create a separate user for connecting within the application
             // rather than using our superuser
             string alloyDBUser = "postgres";
@@ -66,13 +56,17 @@ namespace cartservice.cartstore
         {
             await using var dataSource = NpgsqlDataSource.Create(connectionString);
 
-            var fetchCmd = $"SELECT quantity FROM {tableName} WHERE userID='{userId}' AND productID='{productId}'";
+            var fetchCmd = $"SELECT quantity FROM {tableName} WHERE userID=@userId AND productID=@productId";
             var currentQuantity = 0;
-            var cmdRead = dataSource.CreateCommand(fetchCmd);
-            await using (var reader = await cmdRead.ExecuteReaderAsync())
+            await using (var cmdRead = dataSource.CreateCommand(fetchCmd))
             {
-                while (await reader.ReadAsync())
-                    currentQuantity += reader.GetInt32(0);
+                cmdRead.Parameters.AddWithValue("userId", userId);
+                cmdRead.Parameters.AddWithValue("productId", productId);
+                await using (var reader = await cmdRead.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                        currentQuantity += reader.GetInt32(0);
+                }
             }
 
             var totalQuantity = quantity + currentQuantity;
@@ -80,13 +74,16 @@ namespace cartservice.cartstore
             // Use INSERT ... ON CONFLICT to prevent duplicate key error
             var insertCmd = $@"
                 INSERT INTO {tableName} (userId, productId, quantity)
-                VALUES ('{userId}', '{productId}', {totalQuantity})
+                VALUES (@userId, @productId, @quantity)
                 ON CONFLICT (userId, productId)
-                DO UPDATE SET quantity = {totalQuantity};
+                DO UPDATE SET quantity = @quantity;
             ";
 
             await using (var cmdInsert = dataSource.CreateCommand(insertCmd))
             {
+                cmdInsert.Parameters.AddWithValue("userId", userId);
+                cmdInsert.Parameters.AddWithValue("productId", productId);
+                cmdInsert.Parameters.AddWithValue("quantity", totalQuantity);
                 await Task.Run(() =>
                 {
                     return cmdInsert.ExecuteNonQueryAsync();
@@ -110,8 +107,9 @@ namespace cartservice.cartstore
             {
                 await using var dataSource = NpgsqlDataSource.Create(connectionString);
 
-                var cartFetchCmd = $"SELECT productId, quantity FROM {tableName} WHERE userId = '{userId}'";
-                var cmd = dataSource.CreateCommand(cartFetchCmd);
+                var cartFetchCmd = $"SELECT productId, quantity FROM {tableName} WHERE userId = @userId";
+                await using var cmd = dataSource.CreateCommand(cartFetchCmd);
+                cmd.Parameters.AddWithValue("userId", userId);
                 await using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
@@ -145,9 +143,10 @@ namespace cartservice.cartstore
             try
             {
                 await using var dataSource = NpgsqlDataSource.Create(connectionString);
-                var deleteCmd = $"DELETE FROM {tableName} WHERE userID = '{userId}'";
+                var deleteCmd = $"DELETE FROM {tableName} WHERE userID = @userId";
                 await using (var cmd = dataSource.CreateCommand(deleteCmd))
                 {
+                    cmd.Parameters.AddWithValue("userId", userId);
                     await Task.Run(() =>
                     {
                         return cmd.ExecuteNonQueryAsync();

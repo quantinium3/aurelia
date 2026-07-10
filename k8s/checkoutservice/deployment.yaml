@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout-service-deployment
+  labels:
+    app: checkout-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checkout-service
+  template:
+    metadata:
+      labels:
+        app: checkout-service
+    spec:
+      containers:
+      - name: checkout-service
+        image: checkoutservice:local
+        env:
+          - name: PORT
+            value: "3008"
+          - name: PRODUCT_CATALOG_SERVICE_ADDR
+            value: "product-catalog-service-service:3000"
+          - name: CART_SERVICE_ADDR
+            value: "cart-service-service:3006"
+          - name: CURRENCY_SERVICE_ADDR
+            value: "currency-service-service:3001"
+          - name: EMAIL_SERVICE_ADDR
+            value: "email-service-service:3003"
+          - name: PAYMENT_SERVICE_ADDR
+            value: "payment-service-service:3007"
+          - name: SHIPPING_SERVICE_ADDR
+            value: "shipping-service-service:3002"
+        ports:
+          - containerPort: 3008
