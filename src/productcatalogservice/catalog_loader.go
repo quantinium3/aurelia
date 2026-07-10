@@ -64,7 +64,7 @@ func loadCatalogFromPostgres(catalog *pb.ListProductsResponse) error {
 	pgPassword := os.Getenv("POSTGRES_PASSWORD")
 
 	dsn := fmt.Sprintf(
-		"postgres://postgres:%s@%s/%s?sslmode=disable",
+		"postgres://postgres:%s@%s/%s?sslmode=require",
 		pgPassword, pgAddr, pgDatabaseName,
 	)
 
