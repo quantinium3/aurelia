@@ -1,0 +1,13 @@
+name: loadgenerator
+
+image:
+  repository: loadgenerator
+  tag: local
+
+env:
+  - name: FRONTEND_ADDR
+    value: "frontend-service:3009"
+  - name: USERS
+    value: "10"
+  - name: RATE
+    value: "1"
