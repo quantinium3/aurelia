@@ -1,0 +1,147 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: aurelia-image-updater
+  namespace: argocd
+spec:
+  commonUpdateSettings:
+    updateStrategy: newest-build
+
+  writeBackConfig:
+    method: "git:secret:argocd/git-creds"
+    gitConfig:
+      repository: "git@github.com:quantinium3/aurelia.git"
+      branch: "master"
+
+  applicationRefs:
+    - namePattern: "adservice"
+      images:
+        - alias: adservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/adservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/adservice/values.yaml"
+
+    - namePattern: "cartservice"
+      images:
+        - alias: cartservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/cartservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/cartservice/values.yaml"
+
+    - namePattern: "checkoutservice"
+      images:
+        - alias: checkoutservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/checkoutservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/checkoutservice/values.yaml"
+
+    - namePattern: "currencyservice"
+      images:
+        - alias: currencyservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/currencyservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/currencyservice/values.yaml"
+
+    - namePattern: "emailservice"
+      images:
+        - alias: emailservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/emailservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/emailservice/values.yaml"
+
+    - namePattern: "frontend"
+      images:
+        - alias: frontend
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/frontend"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/frontend/values.yaml"
+
+    - namePattern: "loadgenerator"
+      images:
+        - alias: loadgenerator
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/loadgenerator"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/loadgenerator/values.yaml"
+
+    - namePattern: "paymentservice"
+      images:
+        - alias: paymentservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/paymentservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/paymentservice/values.yaml"
+
+    - namePattern: "productcatalogservice"
+      images:
+        - alias: productcatalogservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/productcatalogservice/values.yaml"
+
+    - namePattern: "recommendationservice"
+      images:
+        - alias: recommendationservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/recommendationservice/values.yaml"
+
+    - namePattern: "shippingservice"
+      images:
+        - alias: shippingservice
+          imageName: "253260001114.dkr.ecr.ap-south-1.amazonaws.com/shippingservice"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
+      writeBackConfig:
+        gitConfig:
+          writeBackTarget: "helmvalues:/helm/shippingservice/values.yaml"
