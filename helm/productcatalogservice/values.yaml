@@ -1,0 +1,27 @@
+name: product-catalog-service
+
+image:
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice
+  tag: a79a25f45a75e78f85025f45b7e0dff8cd8a4347
+
+port: 3000
+
+# secretArn filled in at deploy time from Terraform's
+# module.database.db_instance_master_user_secret_arn output
+postgres:
+  region: ap-south-1
+  secretArn: REPLACE_ME
+
+env:
+  - name: PORT
+    value: "3000"
+  # Filled in at deploy time from Terraform's module.database.db_instance_endpoint output
+  - name: POSTGRES_ADDR
+    value: REPLACE_ME
+  - name: POSTGRES_DATABASE_NAME
+    value: productcatalog
+  - name: POSTGRES_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: product-catalog-service-db-credentials
+        key: password
