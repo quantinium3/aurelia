@@ -1,0 +1,19 @@
+name: shippingservice
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/shippingservice/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: shippingservice
+      context_path: src/shippingservice
