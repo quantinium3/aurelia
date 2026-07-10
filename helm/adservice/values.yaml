@@ -1,0 +1,11 @@
+name: ad-service
+
+image:
+  repository: adservice
+  tag: local
+
+port: 3004
+
+env:
+  - name: PORT
+    value: "3004"
