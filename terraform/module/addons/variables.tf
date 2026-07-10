@@ -22,3 +22,13 @@ variable "secrets_manager_arns" {
   description = "The ARNs of the Secrets Manager secrets that External Secrets Operator is allowed to read"
   type        = list(string)
 }
+
+variable "vpc_id" {
+  description = "The ID of the VPC the cluster is deployed into"
+  type        = string
+}
+
+variable "region" {
+  description = "The AWS region the cluster is deployed into"
+  type        = string
+}
