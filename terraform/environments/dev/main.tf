@@ -76,6 +76,7 @@ module "dns" {
 
   records = {
     "productcatalog-db" = module.database.db_instance_address
+    "cache"             = module.elasticache.cluster_address
   }
 
   tags = var.tags
