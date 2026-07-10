@@ -6,6 +6,10 @@ image:
 
 port: 3009
 
+ingress:
+  domain: aurelia.himanshusolo.dev
+  certificateArn: "pending"
+
 env:
   - name: PORT
     value: "3009"
