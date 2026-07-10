@@ -1,0 +1,19 @@
+name: recommendationservice
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/recommendationservice/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: recommendationservice
+      context_path: src/recommendationservice
