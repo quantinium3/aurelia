@@ -1,0 +1,19 @@
+name: cartservice
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/cartservice/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: cartservice
+      context_path: src/cartservice/src
