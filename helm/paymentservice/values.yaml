@@ -1,0 +1,13 @@
+name: payment-service
+
+image:
+  repository: paymentservice
+  tag: local
+
+port: 3007
+
+env:
+  - name: PORT
+    value: "3007"
+  - name: DISABLE_PROFILER
+    value: "1"
