@@ -1,0 +1,19 @@
+name: checkoutservice
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "src/checkoutservice/**"
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/_build-template.yaml
+    with:
+      service_name: checkoutservice
+      context_path: src/checkoutservice
