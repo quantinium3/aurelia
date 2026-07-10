@@ -1,8 +1,8 @@
 name: currency-service
 
 image:
-  repository: currencyservice
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/currencyservice
+  tag: bb9036e6bf26ea7b98a15feeb09368091bbb7dda
 
 port: 3001
 

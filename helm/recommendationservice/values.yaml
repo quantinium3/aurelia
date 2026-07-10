@@ -1,8 +1,8 @@
 name: recommendation-service
 
 image:
-  repository: recommendationservice
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/recommendationservice
+  tag: f7ac18f82aa3f63dddfdb584d98249a22a555516
 
 port: 3005
 

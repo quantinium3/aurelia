@@ -1,8 +1,8 @@
 name: checkout-service
 
 image:
-  repository: checkoutservice
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/checkoutservice
+  tag: 63d752d0fa87bec68a732b739fca1280e7c5b61b
 
 port: 3008
 

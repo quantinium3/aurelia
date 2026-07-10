@@ -1,8 +1,8 @@
 name: shipping-service
 
 image:
-  repository: shippingservice
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/shippingservice
+  tag: be9173f39bd79f2fa747ed2bbc739cc2e6192228
 
 port: 3002
 

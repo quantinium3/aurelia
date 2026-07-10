@@ -1,8 +1,8 @@
 name: frontend
 
 image:
-  repository: frontend
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/frontend
+  tag: 56588a74f1fd717a060c324d26ea3594137fa315
 
 port: 3009
 

@@ -1,8 +1,8 @@
 name: cart-service
 
 image:
-  repository: cartservice
-  tag: local
+  repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/cartservice
+  tag: a184cd1c062ffb1f736f178c27ed94d3cb757774
 
 port: 3006
 
