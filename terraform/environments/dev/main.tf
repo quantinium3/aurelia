@@ -46,8 +46,6 @@ module "database" {
   deletion_protection = var.deletion_protection
   skip_final_snapshot = var.skip_final_snapshot
 
-  password_rotation_days = var.password_rotation_days
-
   tags = var.tags
 }
 
@@ -70,6 +68,19 @@ module "elasticache" {
   tags = var.tags
 }
 
+module "dns" {
+  source = "../../module/dns"
+
+  domain_name = var.internal_domain_name
+  vpc_id      = module.network.vpc_id
+
+  records = {
+    "productcatalog-db" = module.database.db_instance_address
+  }
+
+  tags = var.tags
+}
+
 module "addons" {
   source = "../../module/addons"
 
@@ -77,7 +88,10 @@ module "addons" {
   cluster_endpoint                   = module.cluster.cluster_endpoint
   cluster_certificate_authority_data = module.cluster.cluster_certificate_authority_data
 
-  secrets_manager_arns = [module.database.db_instance_master_user_secret_arn]
+  secrets_manager_arns = [
+    module.database.db_instance_master_user_secret_arn,
+    data.aws_secretsmanager_secret.image_updater_git_key.arn,
+  ]
 
   vpc_id = module.network.vpc_id
   region = "ap-south-1"
@@ -89,7 +103,7 @@ module "vpn" {
   source = "../../module/vpn"
 
   name                   = var.vpc_name
-  server_certificate_arn = var.vpn_server_certificate_arn
+  server_certificate_arn = data.aws_acm_certificate.vpn_server.arn
   client_certificate_arn = var.vpn_client_certificate_arn
   client_cidr_block      = var.vpn_client_cidr_block
 

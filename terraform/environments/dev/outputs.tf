@@ -38,6 +38,10 @@ output "db_instance_master_user_secret_arn" {
   value = module.database.db_instance_master_user_secret_arn
 }
 
+output "db_instance_master_user_secret_name" {
+  value = module.database.db_instance_master_user_secret_name
+}
+
 output "database_security_group_id" {
   value = module.database.security_group_id
 }

@@ -78,10 +78,6 @@ variable "skip_final_snapshot" {
   type = bool
 }
 
-variable "password_rotation_days" {
-  type = number
-}
-
 variable "cache_cluster_id" {
   type = string
 }
@@ -106,14 +102,14 @@ variable "cache_transit_encryption_enabled" {
   type = bool
 }
 
-variable "vpn_server_certificate_arn" {
-  type = string
-}
-
 variable "vpn_client_certificate_arn" {
   type = string
 }
 
 variable "vpn_client_cidr_block" {
+  type = string
+}
+
+variable "internal_domain_name" {
   type = string
 }

@@ -6,18 +6,17 @@ image:
 
 port: 3000
 
-# secretArn filled in at deploy time from Terraform's
-# module.database.db_instance_master_user_secret_arn output
+# secretName is a stable, Terraform-chosen name (see module/database),
+# not an auto-generated ARN - safe to hardcode, never changes.
 postgres:
   region: ap-south-1
-  secretArn: REPLACE_ME
+  secretName: aurelia/rds/password
 
 env:
   - name: PORT
     value: "3000"
-  # Filled in at deploy time from Terraform's module.database.db_instance_endpoint output
   - name: POSTGRES_ADDR
-    value: REPLACE_ME
+    value: "productcatalog-db.internal.himanshu.dev:5432"
   - name: POSTGRES_DATABASE_NAME
     value: productcatalog
   - name: POSTGRES_PASSWORD

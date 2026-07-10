@@ -48,11 +48,6 @@ variable "skip_final_snapshot" {
   type        = bool
 }
 
-variable "password_rotation_days" {
-  description = "The number of days between automatic rotations of the master user password"
-  type        = number
-}
-
 variable "tags" {
   description = "The tags related to the database"
   type        = map(string)

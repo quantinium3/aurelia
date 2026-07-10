@@ -19,6 +19,21 @@ module "security_group" {
   tags = var.tags
 }
 
+resource "random_password" "master" {
+  length  = 32
+  special = false
+}
+
+resource "aws_secretsmanager_secret" "master_password" {
+  name = "aurelia/rds/password"
+  tags = var.tags
+}
+
+resource "aws_secretsmanager_secret_version" "master_password" {
+  secret_id     = aws_secretsmanager_secret.master_password.id
+  secret_string = random_password.master.result
+}
+
 module "rds" {
   source  = "terraform-aws-modules/rds/aws"
   version = "7.2.0"
@@ -38,19 +53,19 @@ module "rds" {
   username = var.db_username
   port     = 5432
 
-  manage_master_user_password                            = true
-  manage_master_user_password_rotation                   = true
-  master_user_password_rotation_automatically_after_days = var.password_rotation_days
+  manage_master_user_password = false
+  password_wo                 = random_password.master.result
+  password_wo_version         = 1
 
   vpc_security_group_ids = [module.security_group.security_group_id]
 
   create_db_subnet_group = true
   subnet_ids             = var.database_subnets
 
-  publicly_accessible  = false
-  multi_az             = var.multi_az
-  deletion_protection  = var.deletion_protection
-  skip_final_snapshot  = var.skip_final_snapshot
+  publicly_accessible = false
+  multi_az            = var.multi_az
+  deletion_protection = var.deletion_protection
+  skip_final_snapshot = var.skip_final_snapshot
 
   tags = var.tags
 }
