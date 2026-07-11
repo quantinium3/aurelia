@@ -1,0 +1,35 @@
+name: argocd-bootstrap
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment whose ArgoCD apps to apply
+        type: choice
+        options:
+          - dev
+          - prod
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  bootstrap:
+    runs-on: ${{ fromJSON(format('["self-hosted", "aurelia-{0}"]', inputs.environment)) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.TF_AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name aurelia-${{ inputs.environment }} --region ${{ vars.AWS_REGION }}
+
+      - name: Apply ArgoCD applications
+        run: kubectl apply -f argocd/${{ inputs.environment }}/
