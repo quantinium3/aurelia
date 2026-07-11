@@ -52,7 +52,7 @@ resource "aws_instance" "runner" {
   user_data = <<-EOF
     #!/bin/bash
     set -euxo pipefail
-    dnf install -y tar gzip libicu jq unzip
+    dnf install -y tar gzip libicu openssl-libs krb5-libs zlib jq unzip
     curl -fsSL https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip
     unzip -q /tmp/awscliv2.zip -d /tmp && /tmp/aws/install
     curl -fsSL "https://dl.k8s.io/release/$(curl -fsSL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
@@ -63,7 +63,6 @@ resource "aws_instance" "runner" {
     curl -fsSL -o runner.tar.gz "https://github.com/actions/runner/releases/download/v${var.runner_version}/actions-runner-linux-x64-${var.runner_version}.tar.gz"
     tar xzf runner.tar.gz && rm runner.tar.gz
     chown -R runner:runner /home/runner/actions-runner
-    ./bin/installdependencies.sh
     sudo -u runner ./config.sh --unattended --replace \
       --url ${var.github_repo_url} \
       --token ${var.registration_token} \
