@@ -27,6 +27,11 @@ on:
           - aurelia-prod
         default: github-hosted
         required: true
+      cleanup_namespace:
+        description: Optional - delete this namespace before terraform (clears a stuck helm release)
+        type: string
+        default: ""
+        required: false
 
 permissions:
   id-token: write
@@ -55,6 +60,12 @@ jobs:
         with:
           terraform_version: 1.15.5
           terraform_wrapper: false
+
+      - name: Pre-cleanup stuck namespace
+        if: ${{ inputs.cleanup_namespace != '' }}
+        run: |
+          aws eks update-kubeconfig --name aurelia-${{ inputs.environment }} --region ${{ vars.AWS_REGION }}
+          kubectl delete namespace ${{ inputs.cleanup_namespace }} --ignore-not-found --wait=true
 
       - name: Terraform init
         run: terraform init -input=false

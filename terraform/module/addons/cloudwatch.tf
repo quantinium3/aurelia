@@ -24,6 +24,10 @@ resource "helm_release" "cloudwatch_observability" {
   namespace        = "amazon-cloudwatch"
   create_namespace = true
 
+  cleanup_on_fail = true
+
+  depends_on = [helm_release.aws_load_balancer_controller]
+
   set = [
     {
       name  = "clusterName"
