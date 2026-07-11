@@ -9,7 +9,6 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certificateArn | quote }}
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/healthcheck-path: /
-    external-dns.alpha.kubernetes.io/hostname: {{ .Values.ingress.domain | quote }}
 spec:
   ingressClassName: alb
   rules:
