@@ -18,6 +18,11 @@ output "db_instance_master_user_secret_name" {
   value       = aws_secretsmanager_secret.master_password.name
 }
 
+output "db_instance_id" {
+  description = "The RDS instance identifier, used as the DBInstanceIdentifier dimension in CloudWatch alarms"
+  value       = module.rds.db_instance_identifier
+}
+
 output "security_group_id" {
   description = "The ID of the security group attached to the database"
   value       = module.security_group.security_group_id

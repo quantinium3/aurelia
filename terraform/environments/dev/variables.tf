@@ -113,3 +113,7 @@ variable "vpn_client_cidr_block" {
 variable "internal_domain_name" {
   type = string
 }
+
+variable "alarm_notification_email" {
+  type = string
+}
