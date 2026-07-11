@@ -1,4 +1,6 @@
 {{- define "common.deployment" -}}
+{{- $autoscaling := false }}
+{{- if .Values.autoscaling }}{{- if .Values.autoscaling.enabled }}{{- $autoscaling = true }}{{- end }}{{- end }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +8,9 @@ metadata:
   labels:
     app: {{ .Values.name }}
 spec:
+  {{- if not $autoscaling }}
   replicas: {{ .Values.replicas | default 1 }}
+  {{- end }}
   selector:
     matchLabels:
       app: {{ .Values.name }}
@@ -33,5 +37,9 @@ spec:
           {{- if .Values.port }}
           ports:
             - containerPort: {{ .Values.port }}
+          {{- end }}
+          {{- if .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}
 {{- end -}}

@@ -48,3 +48,9 @@ variable "enable_image_updater" {
   type        = bool
   default     = true
 }
+
+variable "enable_autoscaling" {
+  description = "Whether to deploy metrics-server and cluster-autoscaler (prod only)"
+  type        = bool
+  default     = false
+}

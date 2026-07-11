@@ -115,6 +115,7 @@ module "addons" {
   public_domain_name    = "himanshusolo.dev"
 
   enable_image_updater = false
+  enable_autoscaling   = true
 
   tags = var.tags
 }

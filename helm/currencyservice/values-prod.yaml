@@ -1,3 +1,13 @@
 image:
   tag: bb9036e6bf26ea7b98a15feeb09368091bbb7dda
-replicas: 2
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 70

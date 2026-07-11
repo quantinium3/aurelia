@@ -1,9 +1,19 @@
 image:
   tag: 56588a74f1fd717a060c324d26ea3594137fa315
 
-replicas: 2
 
 ingress:
   domain: aurelia.himanshusolo.dev
   certificateArn: "arn:aws:acm:ap-south-1:253260001114:certificate/07038784-0a6f-487a-9bae-18655a6ea188"
   albSecurityGroupId: "sg-0c470503f88f0c339"
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 70
