@@ -2,6 +2,6 @@ image:
   tag: 6a9a5a009e235a4c4ef0a261f7706e7c1d64cafb
 migration:
   image:
-    tag: a655c89399e54f4aac4698e1ef09b9ca21943638
+    tag: 6a9a5a009e235a4c4ef0a261f7706e7c1d64cafb
 postgres:
   secretName: aurelia/rds/password

@@ -1,7 +1,6 @@
 name: loadgenerator
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/loadgenerator
-  tag: 0982052dee373cb13bb69e43596dc3bfa361c48d
 env:
 - name: FRONTEND_ADDR
   value: "frontend-service:3009"

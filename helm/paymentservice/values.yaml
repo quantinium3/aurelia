@@ -1,7 +1,6 @@
 name: payment-service
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/paymentservice
-  tag: a79a25f45a75e78f85025f45b7e0dff8cd8a4347
 port: 3007
 env:
 - name: PORT
