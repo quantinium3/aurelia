@@ -1,6 +1,7 @@
 name: product-catalog-service
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice
+  tag: 6a9a5a009e235a4c4ef0a261f7706e7c1d64cafb
 port: 3000
 postgres:
   region: ap-south-1
@@ -10,6 +11,7 @@ postgres:
 migration:
   image:
     repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/productcatalogservice-migrations
+    tag: 6a9a5a009e235a4c4ef0a261f7706e7c1d64cafb
 env:
 - name: PORT
   value: "3000"
