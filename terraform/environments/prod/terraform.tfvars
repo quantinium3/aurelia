@@ -22,14 +22,14 @@ node_max_size     = 6
 node_desired_size = 3
 
 db_identifier         = "aurelia-prod"
-db_instance_class     = "db.t4g.medium"
+db_instance_class     = "db.t4g.micro"
 db_name               = "productcatalog"
 db_username           = "postgres"
 db_master_secret_name = "aurelia/prod/rds/password"
 
-multi_az            = true
-deletion_protection = true
-skip_final_snapshot = false
+multi_az            = false
+deletion_protection = false
+skip_final_snapshot = true
 
 cache_cluster_id                 = "aurelia-prod"
 create_replication_group         = false
