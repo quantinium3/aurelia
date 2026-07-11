@@ -23,7 +23,7 @@ variable "registration_token" {
 variable "runner_version" {
   description = "GitHub Actions runner release version"
   type        = string
-  default     = "2.321.0"
+  default     = "2.335.1"
 }
 
 variable "instance_type" {
