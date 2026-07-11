@@ -1,12 +1,10 @@
 name: currency-service
-
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/currencyservice
-
+  tag: bb9036e6bf26ea7b98a15feeb09368091bbb7dda
 port: 3001
-
 env:
-  - name: PORT
-    value: "3001"
-  - name: DISABLE_PROFILER
-    value: "1"
+- name: PORT
+  value: "3001"
+- name: DISABLE_PROFILER
+  value: "1"
