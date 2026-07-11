@@ -5,3 +5,5 @@ replicas: 2
 
 ingress:
   domain: aurelia.himanshusolo.dev
+  certificateArn: "arn:aws:acm:ap-south-1:253260001114:certificate/07038784-0a6f-487a-9bae-18655a6ea188"
+  albSecurityGroupId: "sg-0c470503f88f0c339"
