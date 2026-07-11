@@ -1,8 +1,8 @@
-resource "aws_wafv2_web_acl" "cloudfront" {
+resource "aws_wafv2_web_acl" "this" {
   provider = aws.us_east_1
 
-  name        = "aurelia-dev-frontend"
-  description = "WAF for the aurelia-dev public frontend, attached to CloudFront"
+  name        = "${var.name_prefix}-frontend"
+  description = "WAF for the ${var.name_prefix} public frontend, attached to CloudFront"
   scope       = "CLOUDFRONT"
 
   default_action {
@@ -85,7 +85,7 @@ resource "aws_wafv2_web_acl" "cloudfront" {
 
     statement {
       rate_based_statement {
-        limit              = 2000
+        limit              = var.rate_limit
         aggregate_key_type = "IP"
       }
     }
@@ -99,7 +99,7 @@ resource "aws_wafv2_web_acl" "cloudfront" {
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "aurelia-dev-frontend"
+    metric_name                = "${var.name_prefix}-frontend"
     sampled_requests_enabled   = true
   }
 

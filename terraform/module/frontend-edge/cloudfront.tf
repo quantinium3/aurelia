@@ -1,13 +1,13 @@
-resource "aws_cloudfront_distribution" "frontend" {
+resource "aws_cloudfront_distribution" "this" {
   enabled         = true
   is_ipv6_enabled = true
-  aliases         = ["aurelia.himanshusolo.dev"]
-  price_class     = "PriceClass_100"
-  web_acl_id      = aws_wafv2_web_acl.cloudfront.arn
+  aliases         = [var.domain_name]
+  price_class     = var.price_class
+  web_acl_id      = aws_wafv2_web_acl.this.arn
 
   origin {
     origin_id   = "frontend-alb"
-    domain_name = aws_route53_record.alb_origin.fqdn
+    domain_name = aws_route53_record.origin.fqdn
 
     custom_origin_config {
       http_port              = 80
@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "frontend" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate_validation.cloudfront_viewer.certificate_arn
+    acm_certificate_arn      = aws_acm_certificate_validation.viewer.certificate_arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }

@@ -117,3 +117,32 @@ module "vpn" {
 
   tags = var.tags
 }
+
+module "frontend_edge" {
+  source = "../../module/frontend-edge"
+
+  providers = {
+    aws           = aws
+    aws.us_east_1 = aws.us_east_1
+  }
+
+  name_prefix    = var.cluster_name
+  domain_name    = var.frontend_domain_name
+  hosted_zone_id = data.aws_route53_zone.public.zone_id
+  vpc_id         = module.network.vpc_id
+  cluster_name   = module.cluster.cluster_name
+
+  tags = var.tags
+}
+
+module "monitoring" {
+  source = "../../module/monitoring"
+
+  name_prefix        = var.cluster_name
+  notification_email = var.alarm_notification_email
+  db_identifier      = var.db_identifier
+  db_instance_id     = module.database.db_instance_id
+  cluster_name       = module.cluster.cluster_name
+
+  tags = var.tags
+}

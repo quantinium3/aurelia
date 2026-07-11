@@ -62,18 +62,14 @@ output "vpn_dns_name" {
   value = module.vpn.dns_name
 }
 
-output "frontend_certificate_arn" {
-  value = aws_acm_certificate.frontend.arn
-}
-
 output "alb_origin_certificate_arn" {
-  value = aws_acm_certificate.alb_origin.arn
+  value = module.frontend_edge.origin_certificate_arn
 }
 
 output "frontend_alb_security_group_id" {
-  value = aws_security_group.frontend_alb.id
+  value = module.frontend_edge.alb_security_group_id
 }
 
 output "cloudfront_domain_name" {
-  value = aws_cloudfront_distribution.frontend.domain_name
+  value = module.frontend_edge.cloudfront_domain_name
 }

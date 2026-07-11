@@ -1,25 +1,12 @@
-data "aws_resourcegroupstaggingapi_resources" "frontend_alb" {
-  resource_type_filters = ["elasticloadbalancing:loadbalancer"]
-
-  tag_filter {
-    key    = "elbv2.k8s.aws/cluster"
-    values = [var.cluster_name]
-  }
-}
-
-data "aws_lb" "frontend" {
-  arn = data.aws_resourcegroupstaggingapi_resources.frontend_alb.resource_tag_mapping_list[0].resource_arn
-}
-
 resource "aws_sns_topic" "alarms" {
-  name = "${var.cluster_name}-alarms"
+  name = "${var.name_prefix}-alarms"
   tags = var.tags
 }
 
 resource "aws_sns_topic_subscription" "alarms_email" {
   topic_arn = aws_sns_topic.alarms.arn
   protocol  = "email"
-  endpoint  = var.alarm_notification_email
+  endpoint  = var.notification_email
 }
 
 resource "aws_cloudwatch_metric_alarm" "rds_cpu" {
@@ -34,7 +21,7 @@ resource "aws_cloudwatch_metric_alarm" "rds_cpu" {
   alarm_description   = "RDS CPU utilization above 80% for 15 minutes"
 
   dimensions = {
-    DBInstanceIdentifier = module.database.db_instance_id
+    DBInstanceIdentifier = var.db_instance_id
   }
 
   alarm_actions = [aws_sns_topic.alarms.arn]
@@ -53,7 +40,7 @@ resource "aws_cloudwatch_metric_alarm" "rds_connections" {
   alarm_description   = "RDS connection count above 80 for 15 minutes"
 
   dimensions = {
-    DBInstanceIdentifier = module.database.db_instance_id
+    DBInstanceIdentifier = var.db_instance_id
   }
 
   alarm_actions = [aws_sns_topic.alarms.arn]
@@ -68,11 +55,11 @@ resource "aws_cloudwatch_metric_alarm" "rds_free_storage" {
   namespace           = "AWS/RDS"
   period              = 300
   statistic           = "Average"
-  threshold           = 2147483648 # 2 GiB, in bytes
-  alarm_description   = "RDS free storage space below 2 GiB"
+  threshold           = var.rds_free_storage_threshold_bytes
+  alarm_description   = "RDS free storage space below threshold"
 
   dimensions = {
-    DBInstanceIdentifier = module.database.db_instance_id
+    DBInstanceIdentifier = var.db_instance_id
   }
 
   alarm_actions = [aws_sns_topic.alarms.arn]
@@ -80,7 +67,7 @@ resource "aws_cloudwatch_metric_alarm" "rds_free_storage" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "frontend_alb_target_5xx" {
-  alarm_name          = "frontend-alb-target-5xx-high"
+  alarm_name          = "${var.name_prefix}-frontend-alb-target-5xx-high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "HTTPCode_Target_5XX_Count"
@@ -100,7 +87,7 @@ resource "aws_cloudwatch_metric_alarm" "frontend_alb_target_5xx" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "frontend_alb_response_time" {
-  alarm_name          = "frontend-alb-response-time-high"
+  alarm_name          = "${var.name_prefix}-frontend-alb-response-time-high"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 3
   metric_name         = "TargetResponseTime"

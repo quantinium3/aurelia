@@ -1,11 +1,7 @@
-data "aws_ec2_managed_prefix_list" "cloudfront" {
-  name = "com.amazonaws.global.cloudfront.origin-facing"
-}
-
-resource "aws_security_group" "frontend_alb" {
-  name        = "aurelia-dev-frontend-alb"
+resource "aws_security_group" "alb" {
+  name        = "${var.name_prefix}-frontend-alb"
   description = "Frontend ALB - HTTPS from CloudFront edge locations only"
-  vpc_id      = module.network.vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     description     = "HTTPS from CloudFront"

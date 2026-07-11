@@ -117,3 +117,7 @@ variable "internal_domain_name" {
 variable "alarm_notification_email" {
   type = string
 }
+
+variable "frontend_domain_name" {
+  type = string
+}
