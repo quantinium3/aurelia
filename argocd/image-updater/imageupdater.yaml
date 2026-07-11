@@ -25,7 +25,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/adservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/adservice/values-dev.yaml"
 
     - namePattern: "cartservice"
       images:
@@ -38,7 +38,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/cartservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/cartservice/values-dev.yaml"
 
     - namePattern: "checkoutservice"
       images:
@@ -51,7 +51,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/checkoutservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/checkoutservice/values-dev.yaml"
 
     - namePattern: "currencyservice"
       images:
@@ -64,7 +64,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/currencyservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/currencyservice/values-dev.yaml"
 
     - namePattern: "emailservice"
       images:
@@ -77,7 +77,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/emailservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/emailservice/values-dev.yaml"
 
     - namePattern: "frontend"
       images:
@@ -90,7 +90,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/frontend/values.yaml"
+          writeBackTarget: "helmvalues:/helm/frontend/values-dev.yaml"
 
     - namePattern: "loadgenerator"
       images:
@@ -103,7 +103,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/loadgenerator/values.yaml"
+          writeBackTarget: "helmvalues:/helm/loadgenerator/values-dev.yaml"
 
     - namePattern: "paymentservice"
       images:
@@ -116,7 +116,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/paymentservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/paymentservice/values-dev.yaml"
 
     - namePattern: "productcatalogservice"
       images:
@@ -135,7 +135,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/productcatalogservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/productcatalogservice/values-dev.yaml"
 
     - namePattern: "recommendationservice"
       images:
@@ -148,7 +148,7 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/recommendationservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/recommendationservice/values-dev.yaml"
 
     - namePattern: "shippingservice"
       images:
@@ -161,4 +161,4 @@ spec:
       writeBackConfig:
         method: "git:secret:argocd/git-creds"
         gitConfig:
-          writeBackTarget: "helmvalues:/helm/shippingservice/values.yaml"
+          writeBackTarget: "helmvalues:/helm/shippingservice/values-dev.yaml"

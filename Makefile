@@ -122,9 +122,13 @@ argocd-password: ## Print the initial ArgoCD admin password
 argocd-forward: ## Port-forward the ArgoCD UI to https://localhost:8080
 	kubectl -n argocd port-forward svc/argocd-server 8080:443
 
-.PHONY: argocd-apps
-argocd-apps: ## Apply all ArgoCD Application manifests (one per microservice)
-	kubectl apply -f argocd/applications/
+.PHONY: argocd-apps-dev
+argocd-apps-dev: ## Apply the dev ArgoCD Application manifests (run against the dev cluster)
+	kubectl apply -f argocd/dev/
+
+.PHONY: argocd-apps-prod
+argocd-apps-prod: ## Apply the prod ArgoCD Application manifests (run against the prod cluster)
+	kubectl apply -f argocd/prod/
 
 .PHONY: image-updater-secrets
 image-updater-secrets: ## Apply the Image Updater's SecretStore/ExternalSecret/ImageUpdater CRs
