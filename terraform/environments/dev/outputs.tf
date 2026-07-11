@@ -65,3 +65,15 @@ output "vpn_dns_name" {
 output "frontend_certificate_arn" {
   value = aws_acm_certificate.frontend.arn
 }
+
+output "alb_origin_certificate_arn" {
+  value = aws_acm_certificate.alb_origin.arn
+}
+
+output "frontend_alb_security_group_id" {
+  value = aws_security_group.frontend_alb.id
+}
+
+output "cloudfront_domain_name" {
+  value = aws_cloudfront_distribution.frontend.domain_name
+}
