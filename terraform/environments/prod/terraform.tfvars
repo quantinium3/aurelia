@@ -45,4 +45,4 @@ internal_domain_name = "internal.himanshu.dev"
 
 frontend_domain_name = "aurelia.himanshusolo.dev"
 
-enable_frontend_edge = false
+enable_frontend_edge = true
