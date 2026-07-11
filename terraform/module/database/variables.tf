@@ -48,6 +48,12 @@ variable "skip_final_snapshot" {
   type        = bool
 }
 
+variable "master_secret_name" {
+  description = "Secrets Manager secret name holding the master password"
+  type        = string
+  default     = "aurelia/rds/password"
+}
+
 variable "tags" {
   description = "The tags related to the database"
   type        = map(string)

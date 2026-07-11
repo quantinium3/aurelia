@@ -1,6 +1,8 @@
 data "aws_caller_identity" "current" {}
 
 module "image_updater_pod_identity" {
+  count = var.enable_image_updater ? 1 : 0
+
   source  = "terraform-aws-modules/eks-pod-identity/aws"
   version = "~> 2.8"
 
@@ -41,6 +43,8 @@ module "image_updater_pod_identity" {
 }
 
 resource "helm_release" "argocd_image_updater" {
+  count = var.enable_image_updater ? 1 : 0
+
   name             = "argocd-image-updater"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argocd-image-updater"

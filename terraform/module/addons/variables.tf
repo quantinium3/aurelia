@@ -42,3 +42,9 @@ variable "public_domain_name" {
   description = "The public domain name external-dns should limit itself to, e.g. himanshusolo.dev"
   type        = string
 }
+
+variable "enable_image_updater" {
+  description = "Whether to deploy ArgoCD Image Updater (dev auto-deploys; prod is promotion-only so this is false there)"
+  type        = bool
+  default     = true
+}

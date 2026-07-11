@@ -25,7 +25,7 @@ resource "random_password" "master" {
 }
 
 resource "aws_secretsmanager_secret" "master_password" {
-  name = "aurelia/rds/password"
+  name = var.master_secret_name
   tags = var.tags
 }
 
