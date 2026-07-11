@@ -130,3 +130,9 @@ variable "enable_frontend_edge" {
   type    = bool
   default = false
 }
+
+variable "runner_registration_token" {
+  type      = string
+  sensitive = true
+  default   = ""
+}

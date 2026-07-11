@@ -84,6 +84,19 @@ module "dns" {
   tags = var.tags
 }
 
+module "github_runner" {
+  source = "../../module/github-runner"
+
+  name               = var.cluster_name
+  env_label          = "aurelia-prod"
+  github_repo_url    = "https://github.com/quantinium3/aurelia"
+  registration_token = var.runner_registration_token
+  vpc_id             = module.network.vpc_id
+  subnet_id          = module.network.private_subnets[0]
+
+  tags = var.tags
+}
+
 module "addons" {
   source = "../../module/addons"
 

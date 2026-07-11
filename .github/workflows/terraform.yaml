@@ -18,6 +18,15 @@ on:
           - plan
           - apply
         required: true
+      runner:
+        description: Runner (github-hosted for infra; self-hosted label for the cluster/addons phase)
+        type: choice
+        options:
+          - github-hosted
+          - aurelia-dev
+          - aurelia-prod
+        default: github-hosted
+        required: true
 
 permissions:
   id-token: write
@@ -25,7 +34,7 @@ permissions:
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner == 'github-hosted' && fromJSON('["ubuntu-latest"]') || fromJSON(format('["self-hosted", "{0}"]', inputs.runner)) }}
     env:
       TF_VAR_alarm_notification_email: ${{ secrets.TF_VAR_alarm_notification_email }}
     defaults:
