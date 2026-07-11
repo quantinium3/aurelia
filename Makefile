@@ -130,6 +130,11 @@ argocd-apps-dev: ## Apply the dev ArgoCD Application manifests (run against the 
 argocd-apps-prod: ## Apply the prod ArgoCD Application manifests (run against the prod cluster)
 	kubectl apply -f argocd/prod/
 
+.PHONY: promote
+promote: ## Open a PR promoting a service's dev image tag to prod (make promote SERVICE=frontend)
+	$(if $(SERVICE),,$(error SERVICE is required, e.g. make promote SERVICE=frontend))
+	bash scripts/promote.sh $(SERVICE)
+
 .PHONY: image-updater-secrets
 image-updater-secrets: ## Apply the Image Updater's SecretStore/ExternalSecret/ImageUpdater CRs
 	kubectl apply -f argocd/image-updater/secretstore.yaml
