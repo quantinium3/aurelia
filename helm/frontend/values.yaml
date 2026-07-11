@@ -2,14 +2,8 @@ name: frontend
 
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/frontend
-  tag: 56588a74f1fd717a060c324d26ea3594137fa315
 
 port: 3009
-
-ingress:
-  domain: dev.aurelia.himanshusolo.dev
-  certificateArn: "arn:aws:acm:ap-south-1:253260001114:certificate/450d5c4d-caf7-43c9-9bb4-b586290a1a04"
-  albSecurityGroupId: "sg-0b907971b5c846c6b"
 
 env:
   - name: PORT

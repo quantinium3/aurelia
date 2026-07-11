@@ -1,0 +1,7 @@
+image:
+  tag: 56588a74f1fd717a060c324d26ea3594137fa315
+
+replicas: 2
+
+ingress:
+  domain: aurelia.himanshusolo.dev

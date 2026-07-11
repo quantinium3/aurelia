@@ -5,12 +5,18 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/security-groups: {{ .Values.ingress.albSecurityGroupId | quote }}
-    alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certificateArn | quote }}
     alb.ingress.kubernetes.io/healthcheck-path: /
     external-dns.alpha.kubernetes.io/controller: "none"
+    {{- if .Values.ingress.albSecurityGroupId }}
+    alb.ingress.kubernetes.io/security-groups: {{ .Values.ingress.albSecurityGroupId | quote }}
+    alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true"
+    {{- end }}
+    {{- if .Values.ingress.certificateArn }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certificateArn | quote }}
+    {{- else }}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    {{- end }}
 spec:
   ingressClassName: alb
   rules:

@@ -2,7 +2,6 @@ name: email-service
 
 image:
   repository: 253260001114.dkr.ecr.ap-south-1.amazonaws.com/emailservice
-  tag: 4b776644460c28811ced8980cf741e8156557296
 
 port: 3003
 
