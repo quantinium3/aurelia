@@ -5,3 +5,7 @@ output "repository_urls" {
 output "github_actions_role_arn" {
   value = module.github_actions.role_arn
 }
+
+output "terraform_role_arn" {
+  value = module.github_actions.terraform_role_arn
+}

@@ -57,3 +57,19 @@ module "github_actions_role" {
 
   tags = var.tags
 }
+
+module "terraform_role" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role"
+  version = "~> 6.0"
+
+  name = "${var.name}-terraform"
+
+  enable_github_oidc     = true
+  oidc_wildcard_subjects = ["${var.github_repo}:ref:refs/heads/master"]
+
+  policies = {
+    admin = "arn:aws:iam::aws:policy/AdministratorAccess"
+  }
+
+  tags = var.tags
+}

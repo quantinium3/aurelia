@@ -56,6 +56,10 @@ shared-plan: ## terraform plan the shared environment
 shared-apply: ## terraform apply the shared environment
 	cd $(SHARED_DIR) && terraform apply
 
+.PHONY: tf-actions-var
+tf-actions-var: ## Set the TF_AWS_ROLE_ARN Actions variable from shared output (run once after shared-apply)
+	gh variable set TF_AWS_ROLE_ARN --body "$$(cd $(SHARED_DIR) && terraform output -raw terraform_role_arn)"
+
 ## --- Dev environment (VPC, EKS, RDS, ElastiCache, addons, VPN, ACM) ---
 
 .PHONY: dev-init
